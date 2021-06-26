@@ -8,6 +8,7 @@ const watchFilesForChanges = require('./utils/watchFilesForChanges')
 const convertJsToSass = require('./utils/convertJsToSass')
 const transformKeys = require('./utils/transformKeys')
 const transformObject = require('./utils/transformObject')
+
 module.exports = async function(content) {
   this.cacheable()
   const callback = this.async()
@@ -15,14 +16,25 @@ module.exports = async function(content) {
     const options = loaderUtils.getOptions(this) || {}
 
     const files = options.files || []
+    const watchedFiles = options.watchedFiles || []
     const syntax = options.syntax || 'scss'
     const transformFileContent = options.transformFileContent
     let transformKeysCallbacks = options.transformKeys
+
     if (transformKeysCallbacks && !Array.isArray(transformKeysCallbacks)) {
       transformKeysCallbacks = [transformKeysCallbacks]
     }
 
     await watchFilesForChanges(this, files)
+    await watchFilesForChanges(this, watchedFiles)
+
+    for (const filepath of files) {
+      delete require.cache[filepath]
+    }
+
+    for (const filepath of watchedFiles) {
+      delete require.cache[filepath]
+    }
 
     const vars = []
     for (const file of files) {

@@ -1,19 +1,22 @@
 {
-  "extends": [
-    "plugin:jest/recommended"
-  ],
-  "plugins": [
-    "jest"
-  ],
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "impliedStrict": true,
-      "experimentalObjectRestSpread": true
-    }
+  "root"          : true,
+  "env"           : {
+    "node" : true
   },
-  "env": {
-    "jest/globals": true
+  "parserOptions" : {
+    "parser" : "babel-eslint"
+  },
+  "rules"         : {
+    "semi"                     : ["error", "always"],
+    "indent"                   : ["error", 4],
+    "no-mixed-spaces-and-tabs" : ["error", "smart-tabs"],
+
+    "brace-style"              : ["error", "1tbs", {"allowSingleLine" : true}],
+    "key-spacing"              : ["error", {"align" : "colon", "beforeColon" : true}],
+    "object-property-newline"  : ["error", {"allowAllPropertiesOnSameLine" : true}],
+
+    "array-element-newline"    : ["error", "consistent"],
+    "array-bracket-newline"    : ["error", "consistent"],
+    "array-bracket-spacing"    : ["error", "never"]
   }
 }

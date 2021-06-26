@@ -20,7 +20,10 @@ function formatValue(value, syntax) {
   }
 
   if (typeof value === 'string') {
-    return value
+    if (value[0] === '#') {
+      return value
+    }
+    return `"${value}"`
   }
 
   return JSON.stringify(value)
